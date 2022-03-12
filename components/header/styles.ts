@@ -33,7 +33,13 @@ export const InputDefault = tw.input`
 focus:border-gray-teal-8 600 block w-full rounded-md border-gray-300
             bg-gray-100 pl-10 focus:ring-teal-800 sm:text-sm
 `
+export const IconsContainer = tw.div`
+flex items-center justify-end space-x-4
+`
 
+export const MessageNotifier = tw.div`
+flex-center absolute -top-1 -right-3 flex h-5 w-5 animate-pulse items-center justify-center rounded-full bg-red-500 text-xs
+`
 export const Form = tw.form`
 bg-white text-center rounded py-8 px-5 shadow max-w-xs
 `
