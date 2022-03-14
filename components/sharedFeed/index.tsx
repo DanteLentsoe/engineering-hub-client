@@ -1,22 +1,20 @@
-import React, { useEffect, useState } from 'react'
-import { faker } from '@faker-js/faker'
-import EngineeringFeed from '../engineeringFeed'
-import { SharedFeedContainer } from './styles'
+import React, { useEffect, useState } from "react";
+import { faker } from "@faker-js/faker";
+import EngineeringFeed from "../engineeringFeed";
+import { SharedFeedContainer } from "./styles";
 
 const SharedFeed = () => {
-  const [feedInfo, setFeedInfo] = useState<[] | Array<object>>([])
+  const [feedInfo, setFeedInfo] = useState<[] | Array<object>>([]);
   useEffect(() => {
     //load set data
 
     const feedInfoFaker = [...Array(16)].map((_, index) => ({
       ...faker.helpers.contextualCard(),
       id: index,
-    }))
+    }));
 
-    console.log(feedInfoFaker)
-
-    setFeedInfo(feedInfoFaker)
-  }, [])
+    setFeedInfo(feedInfoFaker);
+  }, []);
 
   return (
     <SharedFeedContainer>
@@ -28,7 +26,7 @@ const SharedFeed = () => {
         />
       ))}
     </SharedFeedContainer>
-  )
-}
+  );
+};
 
-export default SharedFeed
+export default SharedFeed;
