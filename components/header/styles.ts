@@ -1,7 +1,7 @@
 import tw from 'tailwind-styled-components'
 
 export const HeaderContainer = tw.div`
-shawdow-sm z-100 sticky top-0 border-b bg-white
+shawdow-sm z-2000 sticky top-0 border-b bg-white
 `
 
 export const HeaderItemsCollection = tw.div`
