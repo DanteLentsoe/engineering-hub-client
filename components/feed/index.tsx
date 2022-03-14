@@ -1,8 +1,9 @@
-import React from 'react'
-import SharedFeed from '../sharedFeed'
-import { FeedContianer } from './styles'
-import Posts from '../posts'
-import ProfileGlobal from '../profileGlobal'
+import React from "react";
+import SharedFeed from "../sharedFeed";
+import { FeedContianer } from "./styles";
+import Posts from "../posts";
+import ProfileGlobal from "../profileGlobal";
+import Suggestions from "../suggestions";
 const Feed = () => {
   return (
     <FeedContianer>
@@ -10,13 +11,14 @@ const Feed = () => {
         <SharedFeed />
         <Posts />
       </section>
-      <section>
-        {/* Mini Profile */}
-        <ProfileGlobal />
-        {/* Suggestions */}
+      <section className="hidden xl:inline-grid md:span-col-1">
+        <div className="fixed top-29">
+          <ProfileGlobal />
+          <Suggestions />
+        </div>
       </section>
     </FeedContianer>
-  )
-}
+  );
+};
 
-export default Feed
+export default Feed;
