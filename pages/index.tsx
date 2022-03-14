@@ -6,7 +6,7 @@ import Feed from '../components/feed'
 
 const Home: NextPage = () => {
   return (
-    <div>
+    <div className="h-screen overflow-y-scroll bg-gray-100 scrollbar-hide">
       <Head>
         <title>Engineering Hub | Home</title>
         <meta
