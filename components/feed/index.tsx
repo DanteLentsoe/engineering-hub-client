@@ -1,16 +1,21 @@
 import React from 'react'
 import SharedFeed from '../sharedFeed'
+import { FeedContianer } from './styles'
+import Posts from '../posts'
+import ProfileGlobal from '../profileGlobal'
 const Feed = () => {
   return (
-    <main className="md:grid-clos-2 mx-auto grid grid-cols-2 md:max-w-3xl xl:max-w-6xl xl:grid-cols-3">
+    <FeedContianer>
       <section className="col-span-2">
         <SharedFeed />
+        <Posts />
       </section>
       <section>
         {/* Mini Profile */}
+        <ProfileGlobal />
         {/* Suggestions */}
       </section>
-    </main>
+    </FeedContianer>
   )
 }
 
