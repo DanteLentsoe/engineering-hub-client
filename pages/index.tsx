@@ -1,12 +1,12 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import Header from '../components/header'
-import Feed from '../components/feed'
+import type { NextPage } from "next";
+import Head from "next/head";
+import Image from "next/image";
+import Header from "../components/header";
+import Feed from "../components/feed";
 
 const Home: NextPage = () => {
   return (
-    <div className="h-screen overflow-y-scroll bg-gray-100 scrollbar-hide">
+    <div className="h-screen overflow-y-scroll bg-gray-100 scrollbar-hide ">
       <Head>
         <title>Engineering Hub | Home</title>
         <meta
@@ -19,7 +19,7 @@ const Home: NextPage = () => {
       <Header />
       <Feed />
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
