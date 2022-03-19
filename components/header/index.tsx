@@ -146,7 +146,7 @@ const Header = () => {
                       <Menu.Item>
                         {({ active }) => (
                           <button
-                            onClick={signOut}
+                            onClick={() => signOut()}
                             className={classNames(
                               active
                                 ? "bg-gray-100 text-gray-900"
@@ -164,7 +164,7 @@ const Header = () => {
             </>
           ) : (
             <>
-              <button onClick={signIn}>Sign In</button>
+              <button onClick={() => signIn()}>Sign In</button>
             </>
           )}
         </IconsContainer>

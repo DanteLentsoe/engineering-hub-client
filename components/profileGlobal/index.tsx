@@ -20,7 +20,9 @@ const ProfileGlobal = () => {
             </h3>
           </div>
 
-          <button className="text-teal-800 text-sm font-bold" onClick={signOut}>
+          <button
+            className="text-teal-800 text-sm font-bold"
+            onClick={() => signOut()}>
             Sign out
           </button>
         </>
