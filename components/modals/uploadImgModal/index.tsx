@@ -9,16 +9,32 @@ import {
   ModalIconContainer,
 } from "./styles";
 import { CameraIcon } from "@heroicons/react/outline";
+import { db, storage } from "../../../firebase/firebase";
+import {
+  addDoc,
+  collection,
+  doc,
+  serverTimestamp,
+  updateDoc,
+} from "firebase/firestore";
+import { useSession } from "next-auth/react";
+import { ref, getDownloadURL, uploadString } from "firebase/storage";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const UploadImgModal = () => {
+  const { data: session } = useSession();
+
   const [isModalOpen, setIsModalOpen] = useRecoilState(ImportImgState);
   const [loading, setLoading] = useState(false);
+
+  // references
+  const captionText = useRef(null);
+  const fileSelectionRef = useRef(null);
 
   const [selectedImage, setSelectedImage] = useState<
     string | null | undefined
   >();
-
-  const fileSelectionRef = useRef(null);
 
   const addImageHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const readFile = new FileReader();
@@ -35,6 +51,55 @@ const UploadImgModal = () => {
     readFile.onload = (readingEvent) => {
       setSelectedImage(readingEvent?.target?.result as string);
     };
+  };
+
+  //upload img to database
+  const uploadImg = async () => {
+    if (loading) {
+      return;
+    }
+    setLoading(true);
+
+    //add img to db
+    const docReference = await addDoc(collection(db, "posts"), {
+      username: session?.user?.name,
+      caption: captionText.current.value,
+      profileImg: session?.user?.image,
+      timestamp: serverTimestamp(),
+    });
+
+    //get post img id
+    console.log("Doc Img Ref ", docReference?.id);
+
+    //upload img to db with post img id
+    const imgReference = ref(storage, `posts/${docReference?.id}/image`);
+
+    try {
+      await uploadString(imgReference, selectedImage, "data_url").then(
+        async (snapshot) => {
+          const downloadURL = await getDownloadURL(imgReference);
+
+          //get img URL from db and update stored img
+
+          await updateDoc(doc(db, "posts", docReference.id), {
+            image: downloadURL,
+          });
+        }
+      );
+
+      toast("Image uploaded", {
+        type: "error",
+      });
+      setIsModalOpen(false);
+      setLoading(false);
+      setSelectedImage(null);
+    } catch (error) {
+      console.log(`Error `, error);
+      toast(`Image Not Uploaded \n${error}`, {
+        type: "error",
+      });
+      setLoading(false);
+    }
   };
 
   return (
@@ -103,7 +168,7 @@ const UploadImgModal = () => {
 
                 <div className="mt-2">
                   <input
-                    //   ref={captionText}
+                    ref={captionText}
                     className="border-none focus:ring-0 w-full text-center"
                     type="text"
                     placeholder="Enter caption for image"
@@ -116,8 +181,8 @@ const UploadImgModal = () => {
                 <div className="mt-5 sm:mt-6">
                   <ModalPrimaryButton
                     type="button"
-                    disabled={false}
-                    onClick={() => console.log("working ")}>
+                    disabled={!selectedImage}
+                    onClick={() => uploadImg()}>
                     {loading ? "Uploading.." : "Upload Image"}
                   </ModalPrimaryButton>
                 </div>
@@ -125,6 +190,7 @@ const UploadImgModal = () => {
             </ModalContentContainer>
           </Transition.Child>
         </ModalContainer>
+        <ToastContainer />
       </Dialog>
     </Transition.Root>
   );
