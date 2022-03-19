@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, forwardRef, DetailedHTMLProps } from "react";
 import {
   HeaderItemsCollection,
   HeaderContainer,
@@ -24,7 +24,9 @@ import {
 } from "@heroicons/react/outline";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { signIn, signOut, useSession } from "next-auth/react";
-import Link from "next/link";
+import { useRouter } from "next/router";
+import { ImportImgState } from "../../store/Modals";
+import { useRecoilState } from "recoil";
 
 // class f(x) for list modal items
 function classNames(...classes: string[]) {
@@ -34,18 +36,21 @@ function classNames(...classes: string[]) {
 const Header = () => {
   const { data: session } = useSession();
 
+  const route = useRouter();
+
+  const [isModalOpen, setIsModalOpen] = useRecoilState(ImportImgState);
+
   return (
     <HeaderContainer>
       <HeaderItemsCollection>
         {/* left */}
         <ImgContainerHeader>
-          <Link href={"/"}>
-            <Image
-              src="https://engineering-hub.vercel.app/engineering-hub.png"
-              layout="fill"
-              objectFit="contain"
-            />
-          </Link>
+          <Image
+            src="https://engineering-hub.vercel.app/engineering-hub.png"
+            layout="fill"
+            objectFit="contain"
+            onClick={() => route.push("/")}
+          />
         </ImgContainerHeader>
 
         <ImgContainerMobile>
@@ -67,9 +72,8 @@ const Header = () => {
 
         {/* right */}
         <IconsContainer>
-          <Link href={"/"}>
-            <HomeIcon className="navBtn" />
-          </Link>
+          <HomeIcon className="navBtn" onClick={() => route.push("/")} />
+
           <MenuIcon className="h-12 cursor-pointer md:hidden" />
 
           {session ? (
@@ -78,7 +82,10 @@ const Header = () => {
                 <PaperAirplaneIcon className="navBtn" />
                 <MessageNotifier>3</MessageNotifier>
               </div>
-              <PlusCircleIcon className="navBtn" />
+              <PlusCircleIcon
+                className="navBtn"
+                onClick={() => setIsModalOpen(true)}
+              />
               <UserGroupIcon className="navBtn" />
               <HeartIcon className="navBtn" />
 
