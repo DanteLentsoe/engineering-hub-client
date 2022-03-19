@@ -1,15 +1,15 @@
 import React from "react";
 import { signOut, useSession } from "next-auth/react";
+import { PersonalProfileContainer, PersonalProfileImg } from "./styles";
 
 const ProfileGlobal = () => {
   const { data: session } = useSession();
 
   return (
-    <div className="flex items-center justify-between mt-14 ml-10">
+    <PersonalProfileContainer>
       {session && (
         <>
-          <img
-            className="rounded-full border p-[2px] w-16 h-16"
+          <PersonalProfileImg
             src={session?.user?.image}
             alt="engineering hub loggedin user profile picture"
           />
@@ -25,7 +25,7 @@ const ProfileGlobal = () => {
           </button>
         </>
       )}
-    </div>
+    </PersonalProfileContainer>
   );
 };
 
