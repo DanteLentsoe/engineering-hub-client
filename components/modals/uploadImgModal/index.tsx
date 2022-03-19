@@ -6,6 +6,7 @@ import {
   ModalContainer,
   ModalContentContainer,
   ModalPrimaryButton,
+  ModalIconContainer,
 } from "./styles";
 import { CameraIcon } from "@heroicons/react/outline";
 
@@ -77,11 +78,10 @@ const UploadImgModal = () => {
                 </>
               ) : (
                 <>
-                  <div
-                    onClick={() => fileSelectionRef.current.click()}
-                    className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-teal-800 cursor-pointer">
+                  <ModalIconContainer
+                    onClick={() => fileSelectionRef.current.click()}>
                     <CameraIcon className="h-6 w-6 text-teal-500" />
-                  </div>
+                  </ModalIconContainer>
                 </>
               )}
 

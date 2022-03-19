@@ -11,3 +11,7 @@ inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-
 export const ModalPrimaryButton = tw.button`
 inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-teal-800 text-base font-medium text-white hover:bg-teal-900 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-teal-600 sm:text-sm disabled:bg-gray-400 disabled:cursor-not-allowed 
 `;
+
+export const ModalIconContainer = tw.div`
+mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-teal-800 cursor-pointer
+    `;
