@@ -26,12 +26,12 @@ interface IPost {
   img: string;
   caption?: string;
 }
-const SignlePost = ({ id, username, userImg, img, caption }: IPost) => {
+const SinglePost = ({ id, username, userImg, img, caption }: IPost) => {
   return (
     <SinglePostContianer>
       {/* post header s */}
       <PostHeaderContainer>
-        <PostHeaderImg src={userImg} alt="" />
+        <PostHeaderImg src={userImg} alt="engineering hub post image" />
         <PostUserName>{username}</PostUserName>
         <DotsHorizontalIcon className="h-5" />
       </PostHeaderContainer>
@@ -70,4 +70,4 @@ const SignlePost = ({ id, username, userImg, img, caption }: IPost) => {
   );
 };
 
-export default SignlePost;
+export default SinglePost;
