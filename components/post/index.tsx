@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import {
   BookmarkIcon,
   ChatIcon,
@@ -6,8 +6,8 @@ import {
   EmojiHappyIcon,
   HeartIcon,
   PaperAirplaneIcon,
-} from '@heroicons/react/outline'
-import { HeartIcon as HeartIconSolid } from '@heroicons/react/solid'
+} from "@heroicons/react/outline";
+import { HeartIcon as HeartIconSolid } from "@heroicons/react/solid";
 
 import {
   SinglePostContianer,
@@ -17,21 +17,21 @@ import {
   PostImg,
   PostButtonsContainer,
   ButtonsWrapper,
-} from './styles'
+} from "./styles";
 
 interface IPost {
-  id: string
-  username: string
-  userImg: string
-  img: string
-  caption?: string
+  id: string;
+  username: string;
+  userImg: string;
+  img: string;
+  caption?: string;
 }
-const SignlePost = ({ id, username, userImg, img, caption }: IPost) => {
+const SinglePost = ({ id, username, userImg, img, caption }: IPost) => {
   return (
     <SinglePostContianer>
       {/* post header s */}
       <PostHeaderContainer>
-        <PostHeaderImg src={userImg} alt="" />
+        <PostHeaderImg src={userImg} alt="engineering hub post image" />
         <PostUserName>{username}</PostUserName>
         <DotsHorizontalIcon className="h-5" />
       </PostHeaderContainer>
@@ -62,12 +62,12 @@ const SignlePost = ({ id, username, userImg, img, caption }: IPost) => {
         <input
           type="text"
           placeholder="Add comment..."
-          className="flex-1 border-none  focus:ring-0"
+          className="flex-1 border-none focus:ring-0"
         />
         <button className="font-semibold text-teal-800">Post</button>
       </form>
     </SinglePostContianer>
-  )
-}
+  );
+};
 
-export default SignlePost
+export default SinglePost;
