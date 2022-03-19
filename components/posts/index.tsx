@@ -1,44 +1,48 @@
-import React from 'react'
-import SignlePost from '../post'
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import React, { useState, useEffect } from "react";
+import { db } from "../../firebase/firebase";
+import SinglePost from "../post";
 
 interface IPost {
-  id: string
-  username: string
-  userImg: string
-  img: string
-  caption?: string
+  data: () => {
+    username: string;
+    image: string;
+    caption?: string;
+    profileImg: string;
+  };
+  id: string;
 }
-const MockData = [
-  {
-    id: '1',
-    username: 'Dante-dev',
-    userImg: 'https://avatars.githubusercontent.com/u/65385487?v=4',
-    img: 'https://miro.medium.com/max/1400/1*qzSi1lZx-4Y733QbDw-h1w.png',
-    caption: 'Test Caption',
-  },
-  {
-    id: '2',
-    username: 'Dante-dddee',
-    userImg: 'https://avatars.githubusercontent.com/u/65385487?v=4',
-    img: 'https://miro.medium.com/max/1400/1*qzSi1lZx-4Y733QbDw-h1w.png',
-    caption: 'Test Caption',
-  },
-]
+
 const Posts = () => {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(
+    // limit real time listeners
+    () =>
+      onSnapshot(
+        query(collection(db, "posts"), orderBy("timestamp", "desc")),
+        (snapshot) => {
+          setPosts(snapshot.docs);
+        }
+      ),
+
+    [db]
+  );
+
   return (
     <div>
-      {MockData.map((post: IPost) => (
-        <SignlePost
+      {posts.map((post: IPost) => (
+        <SinglePost
           key={post.id}
           id={post.id}
-          username={post.username}
-          img={post.img}
-          caption={post.caption}
-          userImg={post.userImg}
+          username={post.data().username}
+          img={post.data().image}
+          caption={post.data().caption}
+          userImg={post.data().profileImg}
         />
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default Posts
+export default Posts;
