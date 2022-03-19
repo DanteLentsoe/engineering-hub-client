@@ -4,9 +4,11 @@ import { FeedContianer } from "./styles";
 import Posts from "../posts";
 import ProfileGlobal from "../profileGlobal";
 import Suggestions from "../suggestions";
+import { useSession } from "next-auth/react";
 const Feed = () => {
+  const { data: session } = useSession();
   return (
-    <FeedContianer>
+    <FeedContianer className={`${!session && "!grid-cols-1 !max-w-3xl"}`}>
       <section className="col-span-2">
         <SharedFeed />
         <Posts />

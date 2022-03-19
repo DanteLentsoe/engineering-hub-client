@@ -13,7 +13,6 @@ import {
 } from "./styles";
 import Image from "next/image";
 import { Menu, Transition } from "@headlessui/react";
-import { useSession } from "next-auth/react";
 import {
   SearchIcon,
   PlusCircleIcon,
@@ -24,8 +23,10 @@ import {
   HomeIcon,
 } from "@heroicons/react/outline";
 import { ChevronDownIcon } from "@heroicons/react/solid";
-import { signIn, signOut } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 
+// class f(x) for list modal items
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
@@ -33,17 +34,18 @@ function classNames(...classes: string[]) {
 const Header = () => {
   const { data: session } = useSession();
 
-  console.log("Check Session ", session?.user);
   return (
     <HeaderContainer>
       <HeaderItemsCollection>
         {/* left */}
         <ImgContainerHeader>
-          <Image
-            src="https://engineering-hub.vercel.app/engineering-hub.png"
-            layout="fill"
-            objectFit="contain"
-          />
+          <Link href={"/"}>
+            <Image
+              src="https://engineering-hub.vercel.app/engineering-hub.png"
+              layout="fill"
+              objectFit="contain"
+            />
+          </Link>
         </ImgContainerHeader>
 
         <ImgContainerMobile>
@@ -65,7 +67,9 @@ const Header = () => {
 
         {/* right */}
         <IconsContainer>
-          <HomeIcon className="navBtn" />
+          <Link href={"/"}>
+            <HomeIcon className="navBtn" />
+          </Link>
           <MenuIcon className="h-12 cursor-pointer md:hidden" />
 
           {session ? (
@@ -82,7 +86,6 @@ const Header = () => {
                 <div>
                   <Menu.Button className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
                     <img
-                      // onClick={signOut}
                       src={session?.user?.image}
                       alt="icon on engineering hub"
                       className="h-10 cursor-pointer rounded-full"
