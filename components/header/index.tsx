@@ -1,4 +1,4 @@
-import React, { Fragment, forwardRef, DetailedHTMLProps } from "react";
+import React, { Fragment } from "react";
 import {
   HeaderItemsCollection,
   HeaderContainer,
