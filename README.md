@@ -1,4 +1,4 @@
-# Next.js + Tailwind CSS Example
+# Engineering Hub
 
 This is application is a hub for software engineers, and developers to voice the opinions on the work experience, in order to help new coming individuals into the industry. The application features full authentication, and Firebase serverless functions, as well as a fully functional database 
 
