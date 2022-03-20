@@ -68,9 +68,6 @@ const UploadImgModal = () => {
       timestamp: serverTimestamp(),
     });
 
-    //get post img id
-    console.log("Doc Img Ref ", docReference?.id);
-
     //upload img to db with post img id
     const imgReference = ref(storage, `posts/${docReference?.id}/image`);
 

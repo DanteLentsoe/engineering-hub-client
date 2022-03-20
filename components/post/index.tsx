@@ -17,6 +17,9 @@ import {
   serverTimestamp,
   orderBy,
   query,
+  setDoc,
+  doc,
+  deleteDoc,
 } from "firebase/firestore";
 import {
   SinglePostContianer,
@@ -43,6 +46,9 @@ interface IComment {
     image: string;
     profileImg: string;
     comment: string;
+    timestamp: {
+      toDate: () => any;
+    };
   };
   id: string;
 }
@@ -51,6 +57,8 @@ const SinglePost = ({ id, username, userImg, img, caption }: IPost) => {
 
   const [comment, setComment] = useState<string>("");
   const [comments, setComments] = useState([]);
+  const [likes, setLikes] = useState([]);
+  const [postLiked, setPostLiked] = useState<boolean | number>(false);
 
   // get comments from DB
   useEffect(
@@ -62,8 +70,36 @@ const SinglePost = ({ id, username, userImg, img, caption }: IPost) => {
         ),
         (snapshot) => setComments(snapshot.docs)
       ),
-    [db]
+    [db, id]
   );
+
+  // get likes from DB
+  useEffect(
+    () =>
+      onSnapshot(query(collection(db, "posts", id, "likes")), (snapshot) =>
+        setLikes(snapshot.docs)
+      ),
+    [db, id]
+  );
+
+  useEffect(
+    () =>
+      // match user like to DB like
+      setPostLiked(
+        likes.findIndex((like) => like.id === session?.user?.email) !== -1
+      ),
+    [likes]
+  );
+
+  const likePostHandler = async () => {
+    if (postLiked as Boolean) {
+      await deleteDoc(doc(db, "posts", id, "likes", session?.user?.email));
+    } else {
+      await setDoc(doc(db, "posts", id, "likes", session?.user?.email), {
+        username: session?.user?.name,
+      });
+    }
+  };
 
   const setCommentHandler = async (
     event: React.FormEvent<HTMLInputElement>
@@ -99,10 +135,28 @@ const SinglePost = ({ id, username, userImg, img, caption }: IPost) => {
         {session && (
           <>
             <ButtonsWrapper>
-              <HeartIcon className="chat-btn" />
+              {postLiked ? (
+                <>
+                  <HeartIconSolid
+                    className="chat-btn text-red-500"
+                    onClick={() => {
+                      likePostHandler();
+                    }}
+                  />
+                </>
+              ) : (
+                <>
+                  <HeartIcon
+                    className={`chat-btn`}
+                    onClick={() => {
+                      likePostHandler();
+                    }}
+                  />
+                </>
+              )}
+
               <ChatIcon className="chat-btn" />
               <PaperAirplaneIcon className="chat-btn" />
-              <HeartIconSolid className="chat-btn" />
             </ButtonsWrapper>
             <BookmarkIcon className="chat-btn" />
           </>
@@ -111,6 +165,11 @@ const SinglePost = ({ id, username, userImg, img, caption }: IPost) => {
       {/*  */}
       {/* captions */}
       <p className="truncate p-5">
+        {likes.length > 0 && (
+          <>
+            <p className="font-bold mb-1">{likes.length} likes</p>
+          </>
+        )}
         <span className="mr-1 font-bold">{username} </span>
         {caption}
       </p>
@@ -127,6 +186,7 @@ const SinglePost = ({ id, username, userImg, img, caption }: IPost) => {
                   comment={comment.data().comment}
                   username={comment.data().username}
                   userImg={comment.data().profileImg}
+                  timestamp={comment.data().timestamp?.toDate()}
                 />
               </>
             );
