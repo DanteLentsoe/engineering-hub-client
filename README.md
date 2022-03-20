@@ -24,5 +24,17 @@ npx create-next-app --example with-tailwindcss with-tailwindcss-app
 yarn create next-app --example with-tailwindcss with-tailwindcss-app
 ```
 
+```
+Planned Features
+- Dynamic Topic Routes
+- Sign with GitHub
+- Regular Sign Up with Email
+- Score Count Career Index (Using cards to rate a job ,in terms of salary expectations etc) 
+- Direct Messgaging 
+- AWS Image Recognition (To prevent inappropriate images from being loaded)
+
+
+```
+
 Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
 <img width="1342" alt="Screenshot 2022-03-19 at 20 06 57" src="https://user-images.githubusercontent.com/65385487/159133263-99dc2d76-e688-4946-a7b1-d666befed4f0.png">
