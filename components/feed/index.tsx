@@ -10,7 +10,7 @@ const Feed = () => {
   return (
     <FeedContianer className={`${!session && "!grid-cols-1 !max-w-3xl"}`}>
       <section className="col-span-2">
-        <SharedFeed />
+        {/* <SharedFeed /> */}
         <Posts />
       </section>
       <section className="hidden xl:inline-grid md:span-col-1">
